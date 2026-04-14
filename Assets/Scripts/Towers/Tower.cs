@@ -1,16 +1,10 @@
 using UnityEngine;
 
-public class Tower : MonoBehaviour
+public abstract class Tower : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    private TowerStats stats;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void OnTowerClick();
+
+    public abstract void Attack();
 }
