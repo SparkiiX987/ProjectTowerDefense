@@ -114,35 +114,35 @@ jobs:
           path: ${{ env.PROJECT_NAME }}_${{ needs.version.outputs.version }}_*.zip
           retention-days: 7
 
-  # # ────────────────────────────────────────────────
-  # # Release : crée UNE release avec la build en .zip
-  # # ────────────────────────────────────────────────
-  # release:
-  #   name: Create GitHub Release
-  #   needs: [version, build]
-  #   runs-on: ubuntu-latest
-  #   permissions:
-  #     contents: write
+  # ────────────────────────────────────────────────
+  # Release : crée UNE release avec la build en .zip
+  # ────────────────────────────────────────────────
+  release:
+    name: Create GitHub Release
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
-  #   steps:
-  #     - name: Download Windows build
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: ${{ env.PROJECT_NAME }}-StandaloneWindows64
-  #         path: artifacts/
+    steps:
+      - name: Download Windows build
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PROJECT_NAME }}-StandaloneWindows64
+          path: artifacts/
 
-  #     - name: Publish Release
-  #       uses: softprops/action-gh-release@v2
-  #       with:
-  #         tag_name: ${{ needs.version.outputs.version }}
-  #         name: "${{ env.PROJECT_NAME }} ${{ needs.version.outputs.version }}"
-  #         body: |
-  #           ### ${{ env.PROJECT_NAME }} ${{ needs.version.outputs.version }}
-  #           Commit : ${{ github.sha }}
-  #           Branch : `${{ github.ref_name }}`
-  #         files: artifacts/*.zip
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.version.outputs.version }}
+          name: "${{ env.PROJECT_NAME }} ${{ needs.version.outputs.version }}"
+          body: |
+            ### ${{ env.PROJECT_NAME }} ${{ needs.version.outputs.version }}
+            Commit : ${{ github.sha }}
+            Branch : `${{ github.ref_name }}`
+          files: artifacts/*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       
   #     - name: Send Discord notification
   #       run: |
